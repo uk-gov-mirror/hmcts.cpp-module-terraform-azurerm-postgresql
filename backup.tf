@@ -4,9 +4,7 @@ locals {
   enable_backup_enrollment = var.service_criticality >= 4 && !var.single_server
 
   # Construct backup policy ID from vault ID and policy name
-  backup_policy_id = local.enable_backup_enrollment
-  ? "${try(data.azurerm_data_protection_backup_vault.vault[0].id, null)}/backupPolicies/${var.backup_policy_name}"
-  : null
+  backup_policy_id = local.enable_backup_enrollment ? "${try(data.azurerm_data_protection_backup_vault.vault[0].id, null)}/backupPolicies/${var.backup_policy_name}" : null
 }
 
 data "azurerm_data_protection_backup_vault" "vault" {
